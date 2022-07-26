@@ -23,12 +23,18 @@ public class PlayerController {
     }
 
     @GetMapping
-    public ResponseEntity<?> find(@RequestParam(required = false) String teamName) {
-        if (teamName == null || teamName.isBlank()) {
-            return ResponseEntity.badRequest().body("la ricerca deve comprendere almeno un parametro");
+    public ResponseEntity<?> find(@RequestParam(required = false) String teamName,
+            @RequestParam(required = false) Integer nGoals) {
+        if (teamName != null && !teamName.isBlank()) {
+            var players = championshipService.findPlayersByTeamName(teamName);
+            return ResponseEntity.ok(PlayerMapper.INSTANCE.toPlayersDTO(players));
         }
-        var players = championshipService.findPlayersByTeamName(teamName);
-        return ResponseEntity.ok(PlayerMapper.INSTANCE.toPlayersDTO(players));
+        if (nGoals != null && nGoals > 0) {
+            var players = championshipService.findPlayersByGoalGreaterThan(nGoals);
+            return ResponseEntity.ok(PlayerMapper.INSTANCE.toPlayersDTO(players));
+        }
+        return ResponseEntity.badRequest().body("la ricerca deve comprendere almeno un parametro");
+
     }
 
 }

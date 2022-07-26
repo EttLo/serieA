@@ -21,4 +21,9 @@ public class ChampionshipService implements AbstractChampionshipService {
         return playerRepo.findByTeamName(teamName);
     }
 
+    @Override
+    public List<Player> findPlayersByGoalGreaterThan(int nGoals) {
+        return playerRepo.findByGoalCountGreaterThan(nGoals);
+    }
+
 }
