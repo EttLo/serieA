@@ -11,9 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import it.accenture.serieA.mapper.PlayerMapper;
 import it.accenture.serieA.service.abstraction.AbstractChampionshipService;
 
-import java.time.LocalDate;
-import java.util.Optional;
-
 @CrossOrigin
 @RestController
 @RequestMapping("api/player")
@@ -32,8 +29,7 @@ public class PlayerController {
             @RequestParam(required = false) String surname,
             @RequestParam(required = false) String position,
             @RequestParam(required = false) Integer year,
-            @RequestParam(required = false) Integer jerseyN
-    ) {
+            @RequestParam(required = false) Integer jerseyN) {
         if (teamName != null && !teamName.isBlank()) {
             var players = championshipService.findPlayersByTeamName(teamName);
             return ResponseEntity.ok(PlayerMapper.INSTANCE.toPlayersDTO(players));
@@ -50,15 +46,15 @@ public class PlayerController {
             var players = championshipService.findPlayersByPosition(position);
             return ResponseEntity.ok(PlayerMapper.INSTANCE.toPlayersDTO(players));
         }
-        if (year != null && year > 0 ) {
-            var players = championshipService.findPlayersByDobAfter(year+"-01-01");
+        if (year != null && year > 0) {
+            var players = championshipService.findPlayersByDobAfter(year + "-01-01");
             return ResponseEntity.ok(PlayerMapper.INSTANCE.toPlayersDTO(players));
         }
         if (jerseyN != null && jerseyN > 0) {
             var players = championshipService.findPlayersByJerseyNumber(jerseyN);
             return ResponseEntity.ok(PlayerMapper.INSTANCE.toPlayersDTO(players));
         }
-            return ResponseEntity.badRequest().body("la ricerca deve comprendere almeno un parametro");
+        return ResponseEntity.badRequest().body("la ricerca deve comprendere almeno un parametro");
     }
 
 }

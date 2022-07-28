@@ -2,6 +2,7 @@ package it.accenture.serieA.service.implementation;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import it.accenture.serieA.model.Team;
 import it.accenture.serieA.repository.abstraction.TeamRepository;
@@ -18,7 +19,7 @@ public class ChampionshipService implements AbstractChampionshipService {
 
     public ChampionshipService(PlayerRepository pr, TeamRepository tr) {
         this.playerRepo = pr;
-        this.teamRepo=tr;
+        this.teamRepo = tr;
     }
 
     @Override
@@ -54,6 +55,11 @@ public class ChampionshipService implements AbstractChampionshipService {
     @Override
     public List<Team> findAllTeams() {
         return teamRepo.findAll();
+    }
+
+    @Override
+    public Optional<Team> findTeamById(Long id) {
+        return teamRepo.findById(id);
     }
 
 }
