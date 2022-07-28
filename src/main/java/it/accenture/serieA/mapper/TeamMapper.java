@@ -1,8 +1,6 @@
 package it.accenture.serieA.mapper;
 
-import it.accenture.serieA.dto.PlayerDTO;
 import it.accenture.serieA.dto.TeamDTO;
-import it.accenture.serieA.model.Player;
 import it.accenture.serieA.model.Team;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -16,6 +14,7 @@ public interface TeamMapper {
 
     @Mapping(target = "coachSurname", source = "coach.surname")
     TeamDTO toTeamDTO(Team t);
+
     @Mapping(target = "coach.surname", source = "coachSurname")
     Team fromTeamDTO(TeamDTO tDTO);
 
