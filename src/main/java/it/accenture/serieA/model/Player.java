@@ -41,5 +41,5 @@ public class Player implements WithId<Long> {
     @JoinColumn(name = "TEAM_ID", referencedColumnName = "ID")
     private Team team;
     @OneToMany(mappedBy = "player")
-    private List<Goal> goal;
+    private List<Goal> goals;
 }

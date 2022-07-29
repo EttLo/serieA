@@ -8,7 +8,9 @@ import it.accenture.serieA.model.Team;
 import it.accenture.serieA.repository.abstraction.TeamRepository;
 import org.springframework.stereotype.Service;
 
+import it.accenture.serieA.model.Match;
 import it.accenture.serieA.model.Player;
+import it.accenture.serieA.repository.abstraction.MatchRepository;
 import it.accenture.serieA.repository.abstraction.PlayerRepository;
 import it.accenture.serieA.service.abstraction.AbstractChampionshipService;
 
@@ -16,15 +18,17 @@ import it.accenture.serieA.service.abstraction.AbstractChampionshipService;
 public class ChampionshipService implements AbstractChampionshipService {
     private PlayerRepository playerRepo;
     private TeamRepository teamRepo;
+    private MatchRepository matchRepo;
 
-    public ChampionshipService(PlayerRepository pr, TeamRepository tr) {
+    public ChampionshipService(PlayerRepository pr, TeamRepository tr, MatchRepository mr) {
         this.playerRepo = pr;
         this.teamRepo = tr;
+        this.matchRepo = mr;
     }
 
     @Override
     public List<Player> findPlayersByTeamName(String teamName) {
-        return playerRepo.findByTeamName(teamName);
+        return playerRepo.findByTeamName(teamName.toUpperCase());
     }
 
     @Override
@@ -44,12 +48,12 @@ public class ChampionshipService implements AbstractChampionshipService {
 
     @Override
     public List<Player> findPlayersBySurname(String surname) {
-        return playerRepo.findBySurname(surname);
+        return playerRepo.findBySurname(surname.toUpperCase());
     }
 
     @Override
     public List<Player> findPlayersByPosition(String position) {
-        return playerRepo.findByPosition(position);
+        return playerRepo.findByPosition(position.toUpperCase());
     }
 
     @Override
@@ -60,6 +64,37 @@ public class ChampionshipService implements AbstractChampionshipService {
     @Override
     public Optional<Team> findTeamById(Long id) {
         return teamRepo.findById(id);
+    }
+
+    @Override
+    public List<Match> findMatchByMatchDate(String matchDate) {
+        var start = LocalDate.parse(matchDate);
+        return matchRepo.findByMatchDateBetween(start, start.plusDays(1));
+    }
+
+    @Override
+    public List<Match> findMatchByTeamHomeName(String teamName) {
+        return matchRepo.findByTeamHomeName(teamName.toUpperCase());
+    }
+
+    @Override
+    public List<Match> findMatchByTeamAwayName(String teamName) {
+        return matchRepo.findByTeamAwayName(teamName.toUpperCase());
+    }
+
+    @Override
+    public List<Match> findMatchByTeamHomeNameOrTeamAwayName(String teamName, String tName) {
+        return matchRepo.findByTeamHomeNameOrTeamAwayName(teamName.toUpperCase(), tName.toUpperCase());
+    }
+
+    @Override
+    public List<Match> findMatchByChampionshipStartYear(int year) {
+        return matchRepo.findByChampionshipStartYear(year);
+    }
+
+    @Override
+    public List<Match> findMatchByGoalCountGreaterThan(int nGoals) {
+        return matchRepo.findByGoalCountGreaterThan(nGoals);
     }
 
 }

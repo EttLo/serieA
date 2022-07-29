@@ -13,8 +13,6 @@ public class GoalDTO {
     private Long id;
     private Long teamId;
     private String teamName;
-    private Long opposingTeamId;
-    private String opposingTeamName;
     private Long playerId;
     private String playerName;
     private String playerSurname;

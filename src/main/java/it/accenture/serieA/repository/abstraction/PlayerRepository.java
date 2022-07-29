@@ -13,15 +13,15 @@ import it.accenture.serieA.model.Player;
 @Repository
 public interface PlayerRepository extends JpaRepository<Player, Long> {
     public List<Player> findByTeamName(String teamName);
+
     public List<Player> findByJerseyNumber(int jerseyN);
+
     public List<Player> findByDobAfter(LocalDate dob);
+
     public List<Player> findBySurname(String surname);
+
     public List<Player> findByPosition(String position);
 
-
-
-
-
-    @Query("SELECT p FROM Player p WHERE SIZE(p.goal)>=:nGoals")
+    @Query("SELECT p FROM Player p WHERE SIZE(p.goals)>=:nGoals")
     public List<Player> findByGoalCountGreaterThan(@Param("nGoals") int nGoals);
 }

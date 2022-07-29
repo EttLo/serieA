@@ -2,6 +2,7 @@ package it.accenture.serieA.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,7 +27,7 @@ public class Goal implements WithId<Long> {
     @ManyToOne
     @JoinColumn(name = "MATCH_ID", referencedColumnName = "ID")
     private Match match;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "PLAYER_ID", referencedColumnName = "ID")
     private Player player;
     @Column(name = "MINUTE")

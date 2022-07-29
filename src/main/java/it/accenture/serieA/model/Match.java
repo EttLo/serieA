@@ -39,6 +39,6 @@ public class Match implements WithId<Long> {
     @JoinColumn(name = "CHAMPIONSHIP_ID", referencedColumnName = "ID")
     private Championship championship;
     @OneToMany(mappedBy = "match")
-    private List<Goal> goal;
+    private List<Goal> goals;
 
 }
